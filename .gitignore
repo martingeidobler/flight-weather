@@ -44,3 +44,4 @@ app.*.map.json
 
 # API keys
 /lib/assets/keys.json
+/android/secrets.properies

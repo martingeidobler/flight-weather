@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="weather"
-        android:name="${applicationName}"
+        android:label="Flight Weather"
+        android:name="Flight Weather"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="${GMP_KEY}"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
