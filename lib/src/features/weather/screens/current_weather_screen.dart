@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:weather/src/features/weather/widgets/weather_location_page.dart';
+import 'package:weatherapp/src/features/weather/bloc/current_weather_cubit.dart';
+import 'package:weatherapp/src/features/weather/widgets/weather_location_page.dart';
 
 class CurrentWeatherScreen extends StatefulWidget {
-  const CurrentWeatherScreen({super.key});
+  final CurrentWeatherBloc bloc;
+  const CurrentWeatherScreen({super.key, required this.bloc});
 
   @override
   State<StatefulWidget> createState() => _CurrentWeatherScreenState();
 }
 
-class _CurrentWeatherScreenState extends State<CurrentWeatherScreen> {
+class _CurrentWeatherScreenState extends State<CurrentWeatherScreen> with TickerProviderStateMixin{
+  late PageController _weatherPageController;
+  late TabController _bottomTabController;
+  int _currentPageIndex = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _weatherPageController = PageController();
+    _bottomTabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +42,14 @@ class _CurrentWeatherScreenState extends State<CurrentWeatherScreen> {
           actions: [getActionButton()],
           shape: const Border(bottom: BorderSide(color: Colors.black)),
         ),
-        body: const WeatherLocationPage());
+        body: StreamBuilder<List<LocationViewModel>>(
+          stream: null,
+          builder: (context, snapshot) {
+            return PageView(
+            
+            );
+          }
+        ));
   }
 
   // ToDo: Check if it is the current location

@@ -1,0 +1,6 @@
+{
+    "appCurrentWeatherHeader": "Current Weather",
+    "@appCurrentWeatherHeader": {
+        "description": "The conventional newborn programmer greeting"
+    }
+}

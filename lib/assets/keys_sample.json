@@ -1,0 +1,10 @@
+{
+    "api_keys": [
+        {
+            "open_weather_map_key": "Enter your key here"
+        },
+        {
+            "google_maps_key": "Enter as GMP_KEY in android/local.properties AND here"
+        }
+    ]
+}
