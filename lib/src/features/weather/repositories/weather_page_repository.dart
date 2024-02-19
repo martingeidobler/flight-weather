@@ -4,21 +4,23 @@ import 'package:weather/weather.dart';
 import 'package:weatherapp/src/features/shared/providers/location_provider.dart';
 import 'package:weatherapp/src/features/shared/providers/weather_provider.dart';
 import 'package:weatherapp/src/features/shared/model/custom_location_model.dart';
-import 'package:weatherapp/src/features/weather/viewmodels/weather_view_model.dart';
+import 'package:weatherapp/src/features/weather/repositories/models/single_weather_view_model.dart';
+import 'package:weatherapp/src/features/weather/viewmodels/weather_page_view_model.dart';
 
-class WeatherRepository {
+class WeatherPageRepository {
   final WeatherProvider weatherProvider;
   final LocationProvider locationProvider;
 
-  WeatherRepository(this.weatherProvider, this.locationProvider);
-
+  WeatherPageRepository(this.weatherProvider, this.locationProvider);
   // the flow here is as follows:
   // try get GPS, if GPS is there, that is the startpage.
   // if there is no GPS, land on the 1st location page
   // if there is NO saved location, show error message on error gps page with "oops! no saved or location!"
-  Future<List<WeatherViewModel>> getWeatherData() async {
+  Future<WeatherPageViewModel> getWeatherData() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    List<WeatherViewModel> viewModels = [];
+    WeatherPageViewModel viewModel =
+        WeatherPageViewModel(lastUpdated: DateTime.now(), viewModelList: []);
+    List<SingleWeatherViewModel> viewModels = [];
 
     /// WEATHER AT LOCATION
     /// todo add error handling
@@ -39,8 +41,8 @@ class WeatherRepository {
     }
 
     if (weatherAtLocation != null) {
-      viewModels.add(
-          WeatherViewModel(weatherAtLocation, true, null, null, heightAGA));
+      viewModels.add(SingleWeatherViewModel(
+          weatherAtLocation, true, null, null, heightAGA));
     }
 
     /// SAVED CITIES
@@ -65,11 +67,11 @@ class WeatherRepository {
         } else {
           throw Error();
         }
-        viewModels.add(
-            WeatherViewModel(weatherAtSavedPosition, false, true, null, 0));
+        viewModels.add(SingleWeatherViewModel(
+            weatherAtSavedPosition, false, true, null, 0));
       }
     }
 
-    return viewModels;
+    return viewModel;
   }
 }

@@ -47,7 +47,7 @@ class _FlightWeatherAppState extends State<FlightWeatherApp> {
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
         themeMode: themeMode,
-        home: CurrentWeatherScreen(bloc: CurrentWeatherBloc(null)) //CurrentWeatherScreen(),
+        home: CurrentWeatherScreen(bloc: CurrentWeatherCubit(null)) //CurrentWeatherScreen(),
         );
   }
 }

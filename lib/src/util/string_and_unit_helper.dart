@@ -1,30 +1,28 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:units_converter/models/extension_converter.dart';
-import 'package:units_converter/models/unit.dart';
 import 'package:units_converter/properties/length.dart';
-import 'package:weather/weather.dart';
+import 'package:units_converter/properties/temperature.dart';
+import 'package:weather/weather.dart' as open_weather_map;
+import 'package:weatherapp/src/features/weather/viewmodels/weather_page_view_model.dart';
 
 abstract class StringAndUnitHelper{
   //todo add prober unit conversions and live update to those
-  static String getStringFromTemperature(Temperature? temp){
-    if (temp== null){
+  static String getStringFromTemperature(double? temp, Units unit){
+    if (temp == null){
       return "";
     }
-    if (true) {
-      return '${temp.celsius}°';
-    } else {
-      return '${temp.fahrenheit}°';
+    if (unit == Units.metric) {
+      return '$temp°';
+    } else  {
+      return '$temp°';
     }
   }
 
-  static String getStringFromWindspeed(double? windSpeed){
+  static String getStringFromWindspeed(double? windSpeed, Units unit){
     if (windSpeed == null){
       return "";
     }
-    if (true){
+    if (unit == Units.metric){
       return "${windSpeed.convertFromTo(LENGTH.meters, LENGTH.kilometers)}kmh";
-    } else if (false) {
-      return "${windSpeed.convertFromTo(LENGTH.meters, LENGTH.miles)}mph";
     } else {
     return "${windSpeed.convertFromTo(LENGTH.meters, LENGTH.nauticalMiles)}kt";
     }
@@ -53,10 +51,10 @@ abstract class StringAndUnitHelper{
   // every 1000m gained temperature drops by about 6.5c
   // to make up for that, i get the height above ground level, devide it
   // by 100 to see just how much colder it si
-  static int getTemperatureHeightOffset(int temp, int heightAga){
+  static int getTemperatureHeightOffsetInC(int temp, int heightAga){
     if (heightAga < 175){
       return 0;
     }
-    return  (6.5 * (heightAga / 1000)).toInt();
+    return (6.5 * (heightAga / 1000)).toInt();
   }
 }
